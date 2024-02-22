@@ -1,6 +1,12 @@
-function PlayIcon({ ...props }) {
+function PlayIcon({ sound }) {
+  function clickHandler() {
+    new Audio(
+      `https://api.dictionaryapi.dev/media/pronunciations/en/${sound}-us.mp3`
+    ).play();
+  }
   return (
     <svg
+      onClick={clickHandler}
       className="group fill-amethyst cursor-pointer transition-all duration-200"
       width="75"
       height="75"
