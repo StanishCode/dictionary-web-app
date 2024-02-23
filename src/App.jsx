@@ -31,6 +31,7 @@ function App() {
       key={index}
       word={result.word}
       phonetic={result.phonetic}
+      meanings={result.meanings}
     />
   ));
 

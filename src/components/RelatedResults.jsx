@@ -1,11 +1,31 @@
 import RelatedResultsList from "./RelatedResultsList";
 
-function RelatedResults() {
+function RelatedResults({ synonyms, antonyms }) {
   return (
-    <div className="mt-6 flex justify-start items-center gap-4">
-      <p className="text-grey font-light">Synonyms</p>
-      <RelatedResultsList />
-    </div>
+    <>
+      {synonyms.length >= 1 && (
+        <div className="mt-6 flex justify-start items-center gap-4">
+          <p className="text-grey font-light">Synonym</p>
+          {synonyms.map((synonym, index) => (
+            <RelatedResultsList
+              key={index * (Math.random() * 1000)}
+              result={synonym}
+            />
+          ))}
+        </div>
+      )}
+      {antonyms.length >= 1 && (
+        <div className="mt-6 flex justify-start items-center gap-4">
+          <p className="text-grey font-light">Antonym</p>
+          {antonyms.map((antonym, index) => (
+            <RelatedResultsList
+              key={index * (Math.random() * 1000)}
+              result={antonym}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 

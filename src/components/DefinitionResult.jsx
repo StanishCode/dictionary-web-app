@@ -1,7 +1,10 @@
 import PlayIcon from "./PlayIcon";
 import DefinitionsList from "./DefinitionsList";
 
-function DefinitionResult({ word, phonetic }) {
+function DefinitionResult({ word, phonetic, meanings }) {
+  const everyPartOfSpeech = meanings.map((meaning, index) => (
+    <DefinitionsList key={index * (Math.random() * 1000)} {...meaning} />
+  ));
   return (
     <section className="max-w-3xl mx-auto mt-12 px-6 tablet:px-10 desktop:px-0">
       <div className="flex justify-between items">
@@ -11,7 +14,7 @@ function DefinitionResult({ word, phonetic }) {
         </div>
         <PlayIcon sound={word} />
       </div>
-      <DefinitionsList />
+      {everyPartOfSpeech}
     </section>
   );
 }
