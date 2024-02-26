@@ -4,23 +4,33 @@ import DefinitionResult from "./components/DefinitionResult";
 
 function App() {
   const [results, setResults] = useState([]);
+  const [searchError, setSearchError] = useState("");
   const search = useRef();
+  const formClasses =
+    searchError === "blank" ? "border-red-500" : "border-transparent";
 
   async function submitRequestHandler(event) {
     event.preventDefault();
 
+    const isBlank = search.current.value.trim() === "";
     try {
-      const response = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${search.current.value}`
-      );
-      if (!response.ok) {
-        throw new Error("No Definitions Found");
-      }
-      const searchResults = await response.json();
-      console.log(searchResults);
+      if (isBlank) {
+        search.current.blur();
+        setSearchError("blank");
+      } else {
+        const response = await fetch(
+          `https://api.dictionaryapi.dev/api/v2/entries/en/${search.current.value}`
+        );
+        if (!response.ok) {
+          throw new Error("No Definitions Found");
+        }
+        setSearchError("");
+        const searchResults = await response.json();
+        console.log(searchResults);
 
-      setResults(searchResults);
-      console.log(...searchResults);
+        setResults(searchResults);
+        console.log(...searchResults);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -43,11 +53,11 @@ function App() {
         <div className="max-w-3xl mx-auto mt-8 tablet:px-10 desktop:px-0">
           <form
             onSubmit={submitRequestHandler}
-            className="flex justify-center bg-lightGrey rounded-2xl focus-within:ring-1 focus-within:ring-amethyst"
+            className={`flex justify-center bg-lightGrey rounded-2xl border focus-within:border focus-within:border-amethyst ${formClasses}`}
           >
             <input
               ref={search}
-              className="w-11/12 py-4 bg-transparent focus:outline-none"
+              className="w-11/12 py-4 font-semibold bg-transparent focus:outline-none"
               type="text"
             />
             <button>
@@ -58,6 +68,11 @@ function App() {
               />
             </button>
           </form>
+          {searchError === "blank" && (
+            <p className="mt-2 text-sm font-light text-red-500">
+              Whoops, can't be empty...
+            </p>
+          )}
         </div>
       </header>
       <main>{definitionResults}</main>
