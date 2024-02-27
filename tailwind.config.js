@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     screens: {
       "mobile": "375px",
@@ -19,6 +20,7 @@ export default {
         white: "#ffffff",
         amethyst: "#a445ed",
         salmon: "#ff5252",
+        neutral: "#838383",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

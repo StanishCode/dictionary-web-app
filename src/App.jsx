@@ -1,13 +1,35 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import SettingsMenu from "./components/SettingsMenu";
 import DefinitionResult from "./components/DefinitionResult";
 
 function App() {
   const [results, setResults] = useState([]);
   const [searchError, setSearchError] = useState("");
+  const [isToggled, setIsToggled] = useState(false);
+  const [theme, setTheme] = useState("light");
   const search = useRef();
   const formClasses =
     searchError === "blank" ? "border-red-500" : "border-transparent";
+
+  // dark mode DOM manipulation
+  //TODO refactor
+  useEffect(() => {
+    const currentTheme = theme === "dark" ? "light" : "dark";
+    const root = window.document.documentElement;
+
+    root.classList.remove(currentTheme);
+    root.classList.add(theme);
+  }, [theme]);
+
+  function darkModeToggleHandler() {
+    setIsToggled((prevState) => {
+      return !prevState;
+    });
+
+    setTheme((prevTheme) => {
+      return prevTheme === "dark" ? "light" : "dark";
+    });
+  }
 
   async function submitRequestHandler(event) {
     event.preventDefault();
@@ -48,17 +70,18 @@ function App() {
   return (
     <>
       <header>
-        <SettingsMenu />
+        <SettingsMenu onToggle={darkModeToggleHandler} toggled={isToggled} />
         {/* keyword search input */}
         <div className="max-w-3xl mx-auto mt-8 tablet:px-10 desktop:px-0">
           <form
             onSubmit={submitRequestHandler}
-            className={`flex justify-center bg-lightGrey rounded-2xl border focus-within:border focus-within:border-amethyst ${formClasses}`}
+            className={`flex justify-center bg-lightGrey rounded-2xl border focus-within:border focus-within:border-amethyst dark:bg-darkGrey ${formClasses}`}
           >
             <input
               ref={search}
-              className="w-11/12 py-4 font-semibold bg-transparent focus:outline-none"
+              className="w-11/12 py-4 font-semibold bg-transparent focus:outline-none dark:text-white"
               type="text"
+              placeholder="Search for any word..."
             />
             <button>
               <img
@@ -75,7 +98,7 @@ function App() {
           )}
         </div>
       </header>
-      <main>{definitionResults}</main>
+      <main className="dark:bg-black">{definitionResults}</main>
     </>
   );
 }
