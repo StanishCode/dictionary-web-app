@@ -1,15 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import SettingsMenu from "./components/SettingsMenu";
 import DefinitionResult from "./components/DefinitionResult";
+import ErrorResult from "./components/ErrorResult";
 
 function App() {
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [results, setResults] = useState([]);
-  const [searchError, setSearchError] = useState("");
-  const [isToggled, setIsToggled] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(prefersDark ? "dark" : "light");
+  const [isToggled, setIsToggled] = useState(prefersDark);
+  const [searchError, setSearchError] = useState({ type: "" });
+  const [currentFont, setCurrentFont] = useState("font-sans");
   const search = useRef();
   const formClasses =
-    searchError === "blank" ? "border-red-500" : "border-transparent";
+    searchError.type === "blank" ? "border-red-500" : "border-transparent";
 
   // dark mode DOM manipulation
   //TODO refactor
@@ -31,6 +34,10 @@ function App() {
     });
   }
 
+  function handleFontChange(font) {
+    setCurrentFont(font);
+  }
+
   async function submitRequestHandler(event) {
     event.preventDefault();
 
@@ -38,23 +45,30 @@ function App() {
     try {
       if (isBlank) {
         search.current.blur();
-        setSearchError("blank");
+        setSearchError({ type: "blank" });
       } else {
         const response = await fetch(
           `https://api.dictionaryapi.dev/api/v2/entries/en/${search.current.value}`
         );
         if (!response.ok) {
-          throw new Error("No Definitions Found");
+          throw {
+            name: "No Definitions Found",
+            message:
+              "Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at a later time or head to the web instead.",
+          };
         }
-        setSearchError("");
+        setSearchError({ type: "" });
+        search.current.value = "";
         const searchResults = await response.json();
-        console.log(searchResults);
 
         setResults(searchResults);
-        console.log(...searchResults);
       }
     } catch (error) {
-      console.log(error.message);
+      setSearchError({
+        name: error.name,
+        message: error.message,
+        type: "invalid",
+      });
     }
   }
 
@@ -64,13 +78,19 @@ function App() {
       word={result.word}
       phonetic={result.phonetic}
       meanings={result.meanings}
+      sources={result.sourceUrls}
+      font={currentFont}
     />
   ));
 
   return (
     <>
       <header>
-        <SettingsMenu onToggle={darkModeToggleHandler} toggled={isToggled} />
+        <SettingsMenu
+          onToggle={darkModeToggleHandler}
+          onSelect={handleFontChange}
+          toggled={isToggled}
+        />
         {/* keyword search input */}
         <div className="max-w-3xl mx-auto mt-8 tablet:px-10 desktop:px-0">
           <form
@@ -91,14 +111,19 @@ function App() {
               />
             </button>
           </form>
-          {searchError === "blank" && (
+          {searchError.type === "blank" && (
             <p className="mt-2 text-sm font-light text-red-500">
               Whoops, can't be empty...
             </p>
           )}
         </div>
       </header>
-      <main className="dark:bg-black">{definitionResults}</main>
+      <main className="dark:bg-black">
+        {searchError.type === "invalid" && (
+          <ErrorResult name={searchError.name} message={searchError.message} />
+        )}
+        {searchError.type !== "invalid" && definitionResults}
+      </main>
     </>
   );
 }
