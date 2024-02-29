@@ -90,6 +90,7 @@ function App() {
           onToggle={darkModeToggleHandler}
           onSelect={handleFontChange}
           toggled={isToggled}
+          font={currentFont}
         />
         {/* keyword search input */}
         <div className="max-w-3xl mx-auto mt-8 tablet:px-10 desktop:px-0">
@@ -99,7 +100,7 @@ function App() {
           >
             <input
               ref={search}
-              className="w-11/12 py-4 font-semibold bg-transparent focus:outline-none dark:text-white"
+              className={`w-11/12 py-4 font-semibold ${currentFont} bg-transparent focus:outline-none dark:text-white`}
               type="text"
               placeholder="Search for any word..."
             />
