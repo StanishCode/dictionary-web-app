@@ -4,9 +4,9 @@ export default {
   darkMode: "class",
   theme: {
     screens: {
-      "mobile": "375px",
-      "tablet": "768px",
-      "desktop": "1440px",
+      "mobile": "100px",
+      "tablet": "450px",
+      "desktop": "1050px",
     },
     extend: {
       colors: {

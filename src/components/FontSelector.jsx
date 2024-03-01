@@ -26,15 +26,16 @@ function FontSelector({ onSelect, font }) {
         onClick={handleOpenFontSelect}
         className="w-full flex justify-between items-center gap-4 text-sm dark:text-white"
       >
-        <span className="shrink-0">{fonts[font]}</span>
+        <span className="shrink-0 font-semibold">{fonts[font]}</span>
         <img src="./src/assets/images/icon-arrow-down.svg" alt="" />
       </button>
+      {/* TODO dynamically render each font list item */}
       <ul
         className={`${
           isOpen ? "" : "hidden"
         } absolute right-0 w-44 p-4 flex flex-col gap-2 rounded-lg shadow-lg bg-white dark:bg-darkGrey dark:text-white dark:shadow-amethyst`}
       >
-        <li>
+        <li className="w-full flex">
           <input
             onClick={handleFontSelect}
             className="invisible"
@@ -44,13 +45,13 @@ function FontSelector({ onSelect, font }) {
             value={"font-sans"}
           />
           <label
-            className="font-sans font-semibold cursor-pointer"
+            className="w-full font-sans font-semibold cursor-pointer"
             htmlFor="font-sans"
           >
             Sans-serif
           </label>
         </li>
-        <li>
+        <li className="w-full flex">
           <input
             onClick={handleFontSelect}
             className="invisible"
@@ -60,13 +61,13 @@ function FontSelector({ onSelect, font }) {
             value={"font-serif"}
           />
           <label
-            className="font-serif font-semibold cursor-pointer"
+            className="w-full font-serif font-semibold cursor-pointer"
             htmlFor="font-serif"
           >
             Serif
           </label>
         </li>
-        <li>
+        <li className="w-full flex">
           <input
             onClick={handleFontSelect}
             className="invisible"
@@ -76,7 +77,7 @@ function FontSelector({ onSelect, font }) {
             value={"font-mono"}
           />
           <label
-            className="font-mono font-semi-bold cursor-pointer"
+            className="w-full font-mono font-semi-bold cursor-pointer"
             htmlFor="font-mono"
           >
             Mono

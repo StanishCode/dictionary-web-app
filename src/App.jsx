@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import SettingsMenu from "./components/SettingsMenu";
+import SearchInput from "./components/SearchInput";
 import DefinitionResult from "./components/DefinitionResult";
 import ErrorResult from "./components/ErrorResult";
 
@@ -11,8 +12,6 @@ function App() {
   const [searchError, setSearchError] = useState({ type: "" });
   const [currentFont, setCurrentFont] = useState("font-sans");
   const search = useRef();
-  const formClasses =
-    searchError.type === "blank" ? "border-red-500" : "border-transparent";
 
   // dark mode DOM manipulation
   //TODO refactor
@@ -38,7 +37,7 @@ function App() {
     setCurrentFont(font);
   }
 
-  async function submitRequestHandler(event) {
+  async function handleSubmitRequest(event) {
     event.preventDefault();
 
     const isBlank = search.current.value.trim() === "";
@@ -93,31 +92,12 @@ function App() {
           font={currentFont}
         />
         {/* keyword search input */}
-        <div className="max-w-3xl mx-auto mt-8 tablet:px-10 desktop:px-0">
-          <form
-            onSubmit={submitRequestHandler}
-            className={`flex justify-center bg-lightGrey rounded-2xl border focus-within:border focus-within:border-amethyst dark:bg-darkGrey ${formClasses}`}
-          >
-            <input
-              ref={search}
-              className={`w-11/12 py-4 font-semibold ${currentFont} bg-transparent focus:outline-none dark:text-white`}
-              type="text"
-              placeholder="Search for any word..."
-            />
-            <button>
-              <img
-                className="w-3.5 h-3.5"
-                src="./src/assets/images/icon-search.svg"
-                alt=""
-              />
-            </button>
-          </form>
-          {searchError.type === "blank" && (
-            <p className="mt-2 text-sm font-light text-red-500">
-              Whoops, can't be empty...
-            </p>
-          )}
-        </div>
+        <SearchInput
+          onRequest={handleSubmitRequest}
+          font={currentFont}
+          searchErr={searchError}
+          ref={search}
+        />
       </header>
       <main className="dark:bg-black">
         {searchError.type === "invalid" && (

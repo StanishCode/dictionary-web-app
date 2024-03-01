@@ -2,7 +2,6 @@ import Definition from "./Definition";
 import RelatedResults from "./RelatedResults";
 
 function DefinitionsList({ partOfSpeech, definitions, font, ...props }) {
-  console.log(props);
   const everyDefinition = definitions.map((entry, index) => (
     <Definition
       key={index * (Math.random() * 1000)}
