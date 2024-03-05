@@ -22,7 +22,7 @@ const SearchInput = forwardRef(function SearchInput(
         <button>
           <img
             className="w-3.5 h-3.5"
-            src="./src/assets/images/icon-search.svg"
+            src="./assets/images/icon-search.svg"
             alt=""
           />
         </button>
