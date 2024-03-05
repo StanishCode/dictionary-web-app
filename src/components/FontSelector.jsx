@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FontSelectorItem from "./FontSelectorItem";
+import imageUrl from "/images/icon-arrow-down.svg";
 
 function FontSelector({ onSelect, font }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +45,7 @@ function FontSelector({ onSelect, font }) {
         className="w-full flex justify-between items-center gap-4 text-sm dark:text-white"
       >
         <span className="shrink-0 font-semibold">{selectedFont.name}</span>
-        <img src="./assets/images/icon-arrow-down.svg" alt="" />
+        <img src={imageUrl} alt="" />
       </button>
       <ul
         className={`${

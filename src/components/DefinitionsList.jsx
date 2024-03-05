@@ -1,3 +1,4 @@
+import React from "react";
 import Definition from "./Definition";
 import RelatedResults from "./RelatedResults";
 

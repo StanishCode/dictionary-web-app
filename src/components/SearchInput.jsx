@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import imageUrl from "/images/icon-search.svg";
 
 const SearchInput = forwardRef(function SearchInput(
   { onRequest, font, searchErr },
@@ -20,11 +21,7 @@ const SearchInput = forwardRef(function SearchInput(
           placeholder="Search for any word..."
         />
         <button>
-          <img
-            className="w-3.5 h-3.5"
-            src="./assets/images/icon-search.svg"
-            alt=""
-          />
+          <img className="w-3.5 h-3.5" src={imageUrl} alt="" />
         </button>
       </form>
       {searchErr.type === "blank" && (

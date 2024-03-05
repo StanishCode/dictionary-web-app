@@ -1,3 +1,5 @@
+import React from "react";
+
 function PlayIcon({ sound }) {
   function clickHandler() {
     new Audio(

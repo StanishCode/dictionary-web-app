@@ -1,3 +1,5 @@
+import React from "react";
+
 function ErrorResult({ name, message }) {
   return (
     <div className="max-w-3xl mx-auto mt-20 px-6 text-center tablet:px-10 desktop:px-0 dark:text-white">

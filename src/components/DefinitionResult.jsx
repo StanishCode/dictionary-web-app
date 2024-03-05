@@ -1,3 +1,4 @@
+import React from "react";
 import PlayIcon from "./PlayIcon";
 import DefinitionsList from "./DefinitionsList";
 

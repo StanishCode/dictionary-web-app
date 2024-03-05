@@ -1,3 +1,5 @@
+import React from "react";
+
 function FontSelectorItem({ onFontSelect, name, value }) {
   return (
     <li className="w-full flex">

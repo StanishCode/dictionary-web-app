@@ -1,3 +1,4 @@
+import React from "react";
 import RelatedResultsList from "./RelatedResultsList";
 
 function RelatedResults({ synonyms, antonyms }) {
