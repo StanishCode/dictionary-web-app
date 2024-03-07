@@ -1,6 +1,7 @@
 import React from "react";
 import PlayIcon from "./PlayIcon";
 import DefinitionsList from "./DefinitionsList";
+import imageUrl from "/images/icon-new-window.svg";
 
 function DefinitionResult({
   word,
@@ -47,7 +48,7 @@ function DefinitionResult({
           Source
         </p>
         {everySource}
-        <img src="./src/assets/images/icon-new-window.svg" alt="" />
+        <img src={imageUrl} alt="" />
       </div>
     </section>
   );
